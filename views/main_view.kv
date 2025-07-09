@@ -1,0 +1,94 @@
+<HomeScreen>:
+    name: "home"
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 20
+        padding: 40
+        canvas.before:
+            Color:
+                rgba: 0.8, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "assets/inicio.png"
+            allow_stretch: True
+            keep_ratio: False
+
+        Label:
+            text: "KivyMarket"
+            font_size: 32
+            bold: True
+            color: 0, 0, 0, 1
+            size_hint_y: None
+            height: 60
+
+        Button:
+            text: "Entrar"
+            size_hint_y: None
+            height: 50
+            on_press:
+                app.root.current = "produtos"  # Muda para a tela de produtos
+
+
+<ProdutoScreen>:
+    name: "produtos"
+    ProdutoController:
+
+<ProdutoController>:
+    #Diz que os elementos vão ser organizados um abaixo do outro (layout vertical).
+
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    #----
+    #Uma linha horizontal com os campos e botão "Adicionar".
+
+    BoxLayout:
+        spacing: 10
+        size_hint_y: None
+        height: "40dp"
+
+    #----
+        #Campo de texto onde o usuário digita o nome.
+
+        TextInput:
+            id: nome_input
+            hint_text: "Nome do produto"
+        
+        #----
+        #Campo de texto onde o usuário digita o preço.
+
+        TextInput:
+            id: preco_input
+            hint_text: "Preço"
+            input_filter: "float"
+
+        #----
+        #Campo de texto onde o usuário digita a qntd.
+
+        TextInput:
+            id: qtd_input
+            hint_text: "Quantidade"
+            input_filter: "int"
+
+        #----
+        #Botão que chama o método adicionar_produto() da classe ProdutoController.
+
+        Button:
+            id: btn_add
+            text: "Adicionar"
+            on_press: root.adicionar_produto()
+        #----
+
+    ScrollView: #Área de rolagem para a lista de produtos.
+
+        #BoxLayout vertical que vai armazenar os cards de produtos.
+        BoxLayout:
+            id: lista_produtos
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: 5
