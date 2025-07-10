@@ -5,3 +5,10 @@ class HomeScreen(Screen):
 
 class ProdutoScreen(Screen):
     pass
+
+class MenuScreen(Screen):  
+    pass
+
+class ListaScreen(Screen):
+    pass
+

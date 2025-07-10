@@ -1,13 +1,26 @@
+#:import IconButton widgets.icon_button.IconButton 
+
+
 <HomeScreen>:
     name: "home"
     FloatLayout:
+        # Fundo verde pastel, atrás da imagem
+        canvas.before:
+            Color:
+                rgba: 0.729, 0.922, 0.851, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Imagem ocupa toda a tela, podendo distorcer para cobrir tudo
         Image:
             source: "assets/inicio.jpeg"
+            size_hint: 1, 1
+            pos_hint: {"x": 0, "y": 0}
             allow_stretch: True
             keep_ratio: False
-            size_hint: (1, 1)
-            pos_hint: {"x": 0, "y": 0}
 
+        # Conteúdo por cima da imagem
         Label:
             text: "KivyMarket"
             font_size: "28sp"
@@ -21,16 +34,67 @@
             font_size: "32sp"
             background_color: 0, 0, 0, 0
             color: 0, 0, 0, 1
-            size_hint: (None, None)
+            size_hint: None, None
             size: 50, 50
             pos_hint: {"center_x": 0.5, "y": 0.05}
             on_press:
-                app.root.current = "produtos"  # Muda para a tela de produtos
+                app.root.current = "menu"
 
+
+<MenuScreen>:
+    name: "menu"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.729, 0.922, 0.851, 1  # Cor verde pastel
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        # Botão voltar
+        Button:
+            text: "< Voltar"
+            size_hint: None, None
+            size: 100, 40
+            pos_hint: {"x": 0.02, "top": 0.98}
+            background_color: 0, 0, 0, 0
+            color: 0, 0, 0, 1
+            on_press:
+                app.root.current = "home"
+
+        # Saudação
+        Label:
+            text: "Olá, Usuário!"
+            font_size: "22sp"
+            bold: True
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "top": 0.90}
+
+        # Botões centrais
+        BoxLayout:
+            size_hint: None, None
+            size: 300, 150
+            pos_hint: {"center_x": 0.5, "center_y": 0.45}
+            spacing: 20
+
+            # Botão Cadastro
+            IconButton:
+                text: "Cadastro"
+                icon: "assets/icone_cadastro.png"
+                on_press: app.root.current = "produtos"
+
+            # Botão Lista
+            IconButton:
+                icon: "assets/icone_lista.png"
+                text: "Lista"
+                on_press: app.root.current = "lista"
 
 <ProdutoScreen>:
     name: "produtos"
     ProdutoController:
+        id: produto_controller
 
 <ProdutoController>:
     canvas.before:
@@ -60,7 +124,7 @@
             font_size: 18
             bold: True
             on_press:
-                app.root.current = "home"
+                app.root.current = "menu"
     #----
                
     Label:
@@ -83,8 +147,9 @@
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint_y: None
-            height: 60
+            size_hint: None, None
+            size: 300, 60
+            pos_hint: {"center_x": 0.5}
 
             Label:
                 text: "Nome do produto"
@@ -117,8 +182,9 @@
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint_y: None
-            height: 60
+            size_hint: None, None
+            size: 300, 60
+            pos_hint: {"center_x": 0.5}
 
             Label:
                 text: "Preço"
@@ -151,12 +217,13 @@
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint_y: None
-            height: 60
+            size_hint: None, None
+            size: 300, 60
+            pos_hint: {"center_x": 0.5}
 
             Label:
                 text: "Quantidade"
-                size_hint_y: 10
+                size_hint_y: None
                 height: 20
                 color: 0, 0, 0, 1
                 font_size: 14
@@ -183,23 +250,56 @@
         #---------------
         #Botão que chama o método adicionar_produto() da classe ProdutoController.
 
-        Button:
-            id: btn_add
-            text: "Adicionar"
-            background_color: 0, 0, 0, 1
-            color: 1, 1, 1, 1
-            font_size: 16
-            size_hint_y: None
-            height: 45
-            on_press: root.adicionar_produto()
-        #----
-
-    ScrollView: #Área de rolagem para a lista de produtos.
-
-        #BoxLayout vertical que vai armazenar os cards de produtos.
         BoxLayout:
-            id: lista_produtos
-            orientation: "vertical"
-            size_hint_y: None
-            height: self.minimum_height
-            spacing: 5
+            size_hint: None, None
+            size: 300, 45
+            pos_hint: {"center_x": 0.5}
+            Button:
+                id: btn_add
+                text: "Adicionar"
+                background_color: 0, 0, 0, 1
+                color: 1, 1, 1, 1
+                font_size: 16
+                size_hint_y: None
+                height: 45
+                on_press: root.adicionar_produto()
+            #----
+
+<ListaScreen>:
+    name: "lista"
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0.729, 0.922, 0.851, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Button:
+            text: "< Voltar"
+            size_hint: None, None
+            size: 100, 40
+            pos_hint: {"x": 0.02, "top": 0.98}
+            background_color: 0, 0, 0, 0
+            color: 0, 0, 0, 1
+            on_press:
+                app.root.current = "menu"
+
+        Label:
+            text: "Lista de Produtos"
+            font_size: 26
+            bold: True
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {"center_x": 0.5, "top": 0.90}
+
+        ScrollView:
+            pos_hint: {"center_x": 0.5, "y": 0.05}
+            size_hint: 0.95, 0.8
+            BoxLayout
+                id: lista_produtos
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+
