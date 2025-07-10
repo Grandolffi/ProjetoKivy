@@ -1,33 +1,29 @@
 <HomeScreen>:
     name: "home"
-    BoxLayout:
-        orientation: "vertical"
-        spacing: 20
-        padding: 40
-        canvas.before:
-            Color:
-                rgba: 0.8, 1, 1, 1
-            Rectangle:
-                pos: self.pos
-                size: self.size
-
+    FloatLayout:
         Image:
-            source: "assets/inicio.png"
+            source: "assets/inicio.jpeg"
             allow_stretch: True
             keep_ratio: False
+            size_hint: (1, 1)
+            pos_hint: {"x": 0, "y": 0}
 
         Label:
             text: "KivyMarket"
-            font_size: 32
+            font_size: "28sp"
             bold: True
             color: 0, 0, 0, 1
             size_hint_y: None
-            height: 60
+            pos_hint: {"center_x": 0.5, "center_y": 0.22}
 
         Button:
-            text: "Entrar"
-            size_hint_y: None
-            height: 50
+            text: ">"
+            font_size: "32sp"
+            background_color: 0, 0, 0, 0
+            color: 0, 0, 0, 1
+            size_hint: (None, None)
+            size: 50, 50
+            pos_hint: {"center_x": 0.5, "y": 0.05}
             on_press:
                 app.root.current = "produtos"  # Muda para a tela de produtos
 
@@ -37,6 +33,13 @@
     ProdutoController:
 
 <ProdutoController>:
+    canvas.before:
+        Color:
+            rgba: 0.729, 0.922, 0.851, 1  # Cor verde pastel
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     #Diz que os elementos vão ser organizados um abaixo do outro (layout vertical).
 
     orientation: "vertical"
@@ -44,42 +47,150 @@
     spacing: 10
 
     #----
+    #Botão voltar
+    BoxLayout:
+        size_hint_y: None
+        height: 40
+        Button:
+            text: "< Voltar"
+            size_hint_x: None
+            width: 100
+            background_color: 0, 0, 0, 0  # fundo transparente
+            color: 0, 0, 0, 1
+            font_size: 18
+            bold: True
+            on_press:
+                app.root.current = "home"
+    #----
+               
+    Label:
+        text: "Cadastro de Produto"
+        font_size: 26
+        bold: True
+        color: 0, 0, 0, 1
+        size_hint_y: None
+        height: 50
+
     #Uma linha horizontal com os campos e botão "Adicionar".
 
     BoxLayout:
-        spacing: 10
+        orientation: 'vertical'
+        spacing: 20
         size_hint_y: None
-        height: "40dp"
+        height: self.minimum_height
 
-    #----
-        #Campo de texto onde o usuário digita o nome.
+        #Campo de texto onde o usuário digita o nome. minimalista
 
-        TextInput:
-            id: nome_input
-            hint_text: "Nome do produto"
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
+
+            Label:
+                text: "Nome do produto"
+                size_hint_y: None
+                height: 20
+                color: 0, 0, 0, 1
+                font_size: 14
+                bold: True #bold: True → negrito
+                halign: "left" #alinha o texto horizontalmente à esquerda
+                valign: "middle"
+                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
+            
+            TextInput:
+                id: nome_input
+                background_color: 0, 0, 0, 0
+                foreground_color: 0, 0, 0, 1
+                size_hint_y: None
+                height: 30
+                multiline: False
+                canvas.after:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        points: self.x, self.y, self.right, self.y
+                        width: 1
         
-        #----
-        #Campo de texto onde o usuário digita o preço.
+        #Fim do campo de texto onde o usuário digita o nome
+        #-------------
+        #Começo do campo de texto onde o usuário digita o preço
 
-        TextInput:
-            id: preco_input
-            hint_text: "Preço"
-            input_filter: "float"
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
 
-        #----
-        #Campo de texto onde o usuário digita a qntd.
+            Label:
+                text: "Preço"
+                size_hint_y: None
+                height: 20
+                color: 0, 0, 0, 1
+                font_size: 14
+                bold: True #bold: True → negrito
+                halign: "left" #alinha o texto horizontalmente à esquerda
+                valign: "middle"
+                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
 
-        TextInput:
-            id: qtd_input
-            hint_text: "Quantidade"
-            input_filter: "int"
+            TextInput:
+                id: preco_input
+                input_filter: "float"
+                background_color: 0, 0, 0, 0
+                foreground_color: 0, 0, 0, 1
+                size_hint_y: None
+                height: 30
+                multiline: False
+                canvas.after:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        points: self.x, self.y, self.right, self.y
+                        width: 1
+        #Fim do campo de texto onde o usuário digita o preço.
+        #---- 
+        #Começo do campo de texto onde o usuário digita a qtd.
 
-        #----
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: 60
+
+            Label:
+                text: "Quantidade"
+                size_hint_y: 10
+                height: 20
+                color: 0, 0, 0, 1
+                font_size: 14
+                bold: True #bold: True → negrito
+                halign: "left" #alinha o texto horizontalmente à esquerda
+                valign: "middle"
+                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
+
+            TextInput:
+                id: qtd_input
+                input_filter: "int"
+                background_color: 0, 0, 0, 0
+                foreground_color: 0, 0, 0, 1
+                size_hint_y: None
+                height: 30
+                multiline: False
+                canvas.after:
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        points: self.x, self.y, self.right, self.y
+                        width: 1
+        #Fim do campo de texto onde o usuário digita a qtd.
+        #---------------
         #Botão que chama o método adicionar_produto() da classe ProdutoController.
 
         Button:
             id: btn_add
             text: "Adicionar"
+            background_color: 0, 0, 0, 1
+            color: 1, 1, 1, 1
+            font_size: 16
+            size_hint_y: None
+            height: 45
             on_press: root.adicionar_produto()
         #----
 

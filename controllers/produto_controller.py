@@ -2,6 +2,7 @@ from kivy.uix.boxlayout import BoxLayout #Base da interface: ´ Importa o BoxLay
 from kivy.uix.label import Label # Importa o Label (texto na tela)
 from kivy.uix.button import Button # importa o Button (botão de clicar).
 from models.produto_model import carregar_produtos, salvar_produtos # Importa do model as funções que carrega a lista de produtos e salvar_produtos(lista) tudo em json
+from kivy.clock import Clock  # Importando clock para usar no atualizar lista, para ele só ser carregado quando chamar a segunda parte do cod
 from log import log
 
 class ProdutoController(BoxLayout):
@@ -10,7 +11,7 @@ class ProdutoController(BoxLayout):
         self.orientacao = 'vertical' # É orientação para o layout ser vertical porem pode ser reescrito no .kv
         self.produtos = carregar_produtos() # Carrega os produtos do arquivo .json e guarda na lista 
         log.info("Produto_Controller -> ProdutoController iniciado. Produtos carregados.")
-        self.atualizar_lista() # Após carregar os produtos, monta a lista na tela, chamando a função atualizar_lista()
+        Clock.schedule_once(lambda dt: self.atualizar_lista(), 0) # Após carregar os produtos, monta a lista na tela, chamando a função atualizar_lista()
 
 
 
