@@ -31,7 +31,7 @@ class CadastroUsuarioScreen(Screen):
         elif self.ids.tipo_gerente.state == "down":
             usuario = Gerente(nome, email, cpf)
         else:
-            tipo = "cliente"  # padrão de segurança
+            usuario = Cliente(nome, email, cpf)  # padrão de segurança
 
         # Enviar para o Firebase
         data = usuario.to_dict()
