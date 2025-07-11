@@ -7,9 +7,6 @@
 - Python 3.10+
 - Kivy
 - Requests
-- Conta no Firebase Realtime Database
-- Ative o Realtime Database
-
-Altere na pasta Url na pasta: services.firebase_config
-FIREBASE_URL = "https://SEU_PROJETO.firebaseio.com"
+- Comando para baixar o requirements:
+    - python -m pip install -r requirements.txt
 
