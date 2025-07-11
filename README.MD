@@ -13,5 +13,5 @@
     - python -m pip install -r requirements.txt
 
 - Comando para rodar a aplicação:
-    -python main.py
+    - python main.py
 
