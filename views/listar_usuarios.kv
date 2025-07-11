@@ -1,0 +1,37 @@
+<ListarUsuariosScreen>:
+    name: "listar_usuarios"
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 0.729, 0.922, 0.851, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            padding: 10
+            spacing: 10
+
+            Button:
+                text: "< Voltar"
+                size_hint_x: None
+                width: 100
+                on_press:
+                    app.root.current = "menu"
+
+            Label:
+                text: "Usuários Cadastrados"
+                font_size: 24
+                color: 0, 0, 0, 1
+
+        ScrollView:
+            GridLayout:
+                id: usuarios_container
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                padding: 10
+                spacing: 10

@@ -1,0 +1,190 @@
+<CadastroUsuarioScreen>:
+    name: "cadastro_usuario"
+    canvas.before:
+        Color:
+            rgba: 0.729, 0.922, 0.851, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+            height: 100
+            pos_hint: {'top': 1}
+            padding: 10
+            spacing: 10
+
+            BoxLayout:
+                size_hint_y: None
+                height: 45
+                Button:
+                    text: "< Voltar"
+                    size_hint_x: None
+                    width: 100
+                    background_color: 0, 0, 0, 0
+                    color: 0, 0, 0, 1
+                    font_size: 18
+                    bold: True
+                    on_press:
+                        app.root.current = "home"
+
+            Label:
+                text: "Cadastro de Usuário"
+                font_size: 26
+                bold: True
+                color: 0, 0, 0, 1
+                size_hint_y: None
+                height: 40
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 30
+            size_hint: None, None
+            size: 320, self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+            # Nome
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 70  # maior que produto
+                Label:
+                    text: "Nome"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: nome_input
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 40
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
+
+            # Email
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 70
+                Label:
+                    text: "Email"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: email_input
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 40
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
+
+            # CPF
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 70
+                Label:
+                    text: "CPF"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: cpf_input
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 40
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
+            # Senha
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: 70
+                Label:
+                    text: "Senha"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: senha_input
+                    password: True
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 40
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
+
+            # Tipo de usuário (Dropdown simplificado com botões)
+            BoxLayout:
+                size_hint: None, None
+                size: 320, 40
+                spacing: 10
+
+                ToggleButton:
+                    id: tipo_cliente
+                    group: "tipo_usuario"
+                    text: "Cliente"
+                    state: "down"
+                ToggleButton:
+                    id: tipo_funcionario
+                    group: "tipo_usuario"
+                    text: "Funcionário"
+                ToggleButton:
+                    id: tipo_gerente
+                    group: "tipo_usuario"
+                    text: "Gerente"
+
+            Button:
+                text: "Cadastrar"
+                background_color: 0, 0, 0, 1
+                color: 1, 1, 1, 1
+                size_hint_y: None
+                height: 45
+                on_press: root.cadastrar_usuario()

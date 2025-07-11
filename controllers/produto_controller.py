@@ -13,6 +13,10 @@ class ProdutoController(BoxLayout):
         #self.produtos = carregar_produtos() #antigo json, não usa mais
         self.carregar_produtos_firebase()
         log.info("Produto_Controller -> ProdutoController iniciado. Produtos carregados.")
+    
+    def atualizar_lista(self, texto):
+        if self.lista_screen:
+            self.lista_screen.atualizar_lista(texto)
 
     def adicionar_produto(self): #Função chamada quando o botão "Adicionar" é clicado.
         log.info(f"Produto_Controller -> Entrando na função adicionar_produto:")

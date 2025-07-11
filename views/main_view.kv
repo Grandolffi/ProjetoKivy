@@ -4,7 +4,6 @@
 <HomeScreen>:
     name: "home"
     FloatLayout:
-        # Fundo verde pastel, atrás da imagem
         canvas.before:
             Color:
                 rgba: 0.729, 0.922, 0.851, 1
@@ -12,7 +11,6 @@
                 pos: self.pos
                 size: self.size
 
-        # Imagem ocupa toda a tela, podendo distorcer para cobrir tudo
         Image:
             source: "assets/inicio.jpeg"
             size_hint: 1, 1
@@ -20,25 +18,54 @@
             allow_stretch: True
             keep_ratio: False
 
-        # Conteúdo por cima da imagem
         Label:
             text: "KivyMarket"
             font_size: "28sp"
             bold: True
             color: 0, 0, 0, 1
             size_hint_y: None
-            pos_hint: {"center_x": 0.5, "center_y": 0.22}
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
 
         Button:
-            text: ">"
-            font_size: "32sp"
+            text: "Cadastrar Usuário"
+            font_size: 18
+            size_hint: 0.5, 0.08
+            pos_hint: {"center_x": 0.5, "center_y": 0.18}
+            background_normal: ""
+            background_down: ""
+            background_color: 0, 0, 0, 0  # torna o fundo transparente para usarmos o canvas
+            color: 0, 0, 0, 1  # cor do texto (preto)
+
+            canvas.before:
+                Color:
+                    rgba: 0.4, 0.7, 0.6, 1  # verde escuro customizado
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [25]  
+            on_press:
+                app.root.current = "cadastro_usuario"
+
+        Button:
+            text: "Fazer Login"
+            font_size: 18
+            size_hint: 0.5, 0.08
+            pos_hint: {"center_x": 0.5, "center_y": 0.08}
+            background_normal: ""
+            background_down: ""
             background_color: 0, 0, 0, 0
             color: 0, 0, 0, 1
-            size_hint: None, None
-            size: 50, 50
-            pos_hint: {"center_x": 0.5, "y": 0.05}
+
+            canvas.before:
+                Color:
+                    rgba: 0.8, 0.9, 0.8, 1  # verde claro para contraste
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [25]
+
             on_press:
-                app.root.current = "menu"
+                app.root.current = "login_usuario"
 
 
 <MenuScreen>:
@@ -74,22 +101,48 @@
 
         # Botões centrais
         BoxLayout:
+            orientation: 'vertical'
             size_hint: None, None
-            size: 300, 150
+            size: 300, 320
             pos_hint: {"center_x": 0.5, "center_y": 0.45}
             spacing: 20
 
-            # Botão Cadastro
-            IconButton:
-                text: "Cadastro"
-                icon: "assets/icone_cadastro.png"
-                on_press: app.root.current = "produtos"
+            # Primeira linha
+            BoxLayout:
+                spacing: 20
+                size_hint_y: None
+                height: 150
 
-            # Botão Lista
-            IconButton:
-                icon: "assets/icone_lista.png"
-                text: "Lista"
-                on_press: app.root.current = "lista"
+                IconButton:
+                    text: "Cadastro"
+                    icon: "assets/icone_cadastro.png"
+                    on_press: app.root.current = "produtos"
+
+                IconButton:
+                    icon: "assets/icone_lista.png"
+                    text: "Lista"
+                    on_press: app.root.current = "lista"
+
+            # Segunda linha
+            BoxLayout:
+                spacing: 20
+                size_hint_y: None
+                height: 150
+
+                IconButton:
+                    icon: "assets/icone_usuarios.png"
+                    text: "Usuários"
+                    on_press: app.root.current = "listar_usuarios"
+                    # opacity: 1 if app.tipo_usuario == "gerente" else 0
+                    # disabled: app.tipo_usuario != "gerente"
+
+                IconButton:
+                    icon: "assets/icone_compra.png"
+                    text: "Comprar"
+                    on_press: app.root.current = "compra"
+                    # opacity: 1 if app.tipo_usuario == "cliente" else 0
+                    # disabled: app.tipo_usuario != "cliente"
+
 
 <ProdutoScreen>:
     name: "produtos"
@@ -99,161 +152,146 @@
 <ProdutoController>:
     canvas.before:
         Color:
-            rgba: 0.729, 0.922, 0.851, 1  # Cor verde pastel
+            rgba: 0.729, 0.922, 0.851, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
-    #Diz que os elementos vão ser organizados um abaixo do outro (layout vertical).
-
-    orientation: "vertical"
-    padding: 10
-    spacing: 10
-
-    #----
-    #Botão voltar
-    BoxLayout:
-        size_hint_y: None
-        height: 40
-        Button:
-            text: "< Voltar"
-            size_hint_x: None
-            width: 100
-            background_color: 0, 0, 0, 0  # fundo transparente
-            color: 0, 0, 0, 1
-            font_size: 18
-            bold: True
-            on_press:
-                app.root.current = "menu"
-    #----
-               
-    Label:
-        text: "Cadastro de Produto"
-        font_size: 26
-        bold: True
-        color: 0, 0, 0, 1
-        size_hint_y: None
-        height: 50
-
-    #Uma linha horizontal com os campos e botão "Adicionar".
-
-    BoxLayout:
-        orientation: 'vertical'
-        spacing: 20
-        size_hint_y: None
-        height: self.minimum_height
-
-        #Campo de texto onde o usuário digita o nome. minimalista
-
+    FloatLayout:
+        # Topo com botão voltar e título
         BoxLayout:
             orientation: 'vertical'
-            size_hint: None, None
-            size: 300, 60
-            pos_hint: {"center_x": 0.5}
+            size_hint: 1, None
+            height: 100
+            pos_hint: {'top': 1}
+            padding: 10
+            spacing: 10
+
+            BoxLayout:
+                size_hint_y: None
+                height: 45
+                Button:
+                    text: "< Voltar"
+                    size_hint_x: None
+                    width: 100
+                    background_color: 0, 0, 0, 0
+                    color: 0, 0, 0, 1
+                    font_size: 18
+                    bold: True
+                    on_press:
+                        app.root.current = "menu"
 
             Label:
-                text: "Nome do produto"
-                size_hint_y: None
-                height: 20
+                text: "Cadastro de Produto"
+                font_size: 26
+                bold: True
                 color: 0, 0, 0, 1
-                font_size: 14
-                bold: True #bold: True → negrito
-                halign: "left" #alinha o texto horizontalmente à esquerda
-                valign: "middle"
-                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
-            
-            TextInput:
-                id: nome_input
-                background_color: 0, 0, 0, 0
-                foreground_color: 0, 0, 0, 1
                 size_hint_y: None
-                height: 30
-                multiline: False
-                canvas.after:
-                    Color:
-                        rgba: 0, 0, 0, 1
-                    Line:
-                        points: self.x, self.y, self.right, self.y
-                        width: 1
-        
-        #Fim do campo de texto onde o usuário digita o nome
-        #-------------
-        #Começo do campo de texto onde o usuário digita o preço
+                height: 40
 
+        # Formulário centralizado
         BoxLayout:
             orientation: 'vertical'
+            spacing: 30
             size_hint: None, None
-            size: 300, 60
-            pos_hint: {"center_x": 0.5}
+            size: 320, self.minimum_height
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-            Label:
-                text: "Preço"
+            # Nome do produto
+            BoxLayout:
+                orientation: 'vertical'
                 size_hint_y: None
-                height: 20
-                color: 0, 0, 0, 1
-                font_size: 14
-                bold: True #bold: True → negrito
-                halign: "left" #alinha o texto horizontalmente à esquerda
-                valign: "middle"
-                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
+                height: 70
+                Label:
+                    text: "Nome do produto"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: nome_input
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
 
-            TextInput:
-                id: preco_input
-                input_filter: "float"
-                background_color: 0, 0, 0, 0
-                foreground_color: 0, 0, 0, 1
+            # Preço
+            BoxLayout:
+                orientation: 'vertical'
                 size_hint_y: None
-                height: 30
-                multiline: False
-                canvas.after:
-                    Color:
-                        rgba: 0, 0, 0, 1
-                    Line:
-                        points: self.x, self.y, self.right, self.y
-                        width: 1
-        #Fim do campo de texto onde o usuário digita o preço.
-        #---- 
-        #Começo do campo de texto onde o usuário digita a qtd.
+                height: 70
+                Label:
+                    text: "Preço"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: preco_input
+                    input_filter: "float"
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
 
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint: None, None
-            size: 300, 60
-            pos_hint: {"center_x": 0.5}
-
-            Label:
-                text: "Quantidade"
+            # Quantidade
+            BoxLayout:
+                orientation: 'vertical'
                 size_hint_y: None
-                height: 20
-                color: 0, 0, 0, 1
-                font_size: 14
-                bold: True #bold: True → negrito
-                halign: "left" #alinha o texto horizontalmente à esquerda
-                valign: "middle"
-                text_size: self.size #faz o alinhamento funcionar corretamente (sem isso, não respeita o halign)
-
-            TextInput:
-                id: qtd_input
-                input_filter: "int"
-                background_color: 0, 0, 0, 0
-                foreground_color: 0, 0, 0, 1
+                height: 70
+                Label:
+                    text: "Quantidade"
+                    size_hint_y: None
+                    height: 20
+                    color: 0, 0, 0, 1
+                    font_size: 14
+                    bold: True
+                    halign: "left"
+                    valign: "middle"
+                    text_size: self.size
+                TextInput:
+                    id: qtd_input
+                    input_filter: "int"
+                    background_color: 0, 0, 0, 0
+                    foreground_color: 0, 0, 0, 1
+                    size_hint_y: None
+                    height: 30
+                    multiline: False
+                    canvas.after:
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.right, self.y
+                            width: 1
+                            
+            # Adicionar espaço antes do botão
+            Widget:
                 size_hint_y: None
-                height: 30
-                multiline: False
-                canvas.after:
-                    Color:
-                        rgba: 0, 0, 0, 1
-                    Line:
-                        points: self.x, self.y, self.right, self.y
-                        width: 1
-        #Fim do campo de texto onde o usuário digita a qtd.
-        #---------------
-        #Botão que chama o método adicionar_produto() da classe ProdutoController.
+                height: 20  # aqui
 
-        BoxLayout:
-            size_hint: None, None
-            size: 300, 45
-            pos_hint: {"center_x": 0.5}
+            # Botão adicionar
             Button:
                 id: btn_add
                 text: "Adicionar"
@@ -263,7 +301,7 @@
                 size_hint_y: None
                 height: 45
                 on_press: root.adicionar_produto()
-            #----
+
 
 <ListaScreen>:
     name: "lista"
@@ -275,6 +313,7 @@
                 pos: self.pos
                 size: self.size
 
+        # Botão voltar
         Button:
             text: "< Voltar"
             size_hint: None, None
@@ -285,6 +324,7 @@
             on_press:
                 app.root.current = "menu"
 
+        # Título
         Label:
             text: "Lista de Produtos"
             font_size: 26
@@ -294,12 +334,96 @@
             size: self.texture_size
             pos_hint: {"center_x": 0.5, "top": 0.90}
 
+        # Scroll com campo de busca, cabeçalho e lista
         ScrollView:
             pos_hint: {"center_x": 0.5, "y": 0.05}
-            size_hint: 0.95, 0.8
-            BoxLayout
-                id: lista_produtos
+            size_hint: 0.95, 0.75
+
+            BoxLayout:
                 orientation: "vertical"
                 size_hint_y: None
                 height: self.minimum_height
+                spacing: 10
+                padding: [10, 10]
+
+                # Campo de busca minimalista
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    size: 300, 60
+                    pos_hint: {"x": 0.0}
+
+                    Label:
+                        text: "Buscar produto"
+                        size_hint_y: None
+                        height: 20
+                        color: 0, 0, 0, 1
+                        font_size: 14
+                        bold: True
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
+                    TextInput:
+                        id: campo_busca
+                        hint_text: "Digite para filtrar..."
+                        background_color: 0, 0, 0, 0
+                        foreground_color: 0, 0, 0, 1
+                        size_hint_y: None
+                        height: 30
+                        multiline: False
+                        on_text: app.produto_controller.atualizar_lista(self.text)
+                        canvas.after:
+                            Color:
+                                rgba: 0, 0, 0, 1
+                            Line:
+                                points: self.x, self.y, self.right, self.y
+                                width: 1
+
+                # Cabeçalho tipo tabela
+                BoxLayout:
+                    size_hint_y: None
+                    height: 40
+                    spacing: 10
+                    padding: [10, 0]
+                    Label:
+                        text: "Nome"
+                        bold: True
+                        color: 0, 0, 0, 1
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+                    Label:
+                        text: "Preço"
+                        bold: True
+                        color: 0, 0, 0, 1
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+                    Label:
+                        text: "Qtd"
+                        bold: True
+                        color: 0, 0, 0, 1
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+                    Label:
+                        text: "Ações"
+                        bold: True
+                        color: 0, 0, 0, 1
+                        size_hint_x: None
+                        width: 120
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
+                # Lista de produtos
+                BoxLayout:
+                    id: lista_produtos
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+
+
+
 
