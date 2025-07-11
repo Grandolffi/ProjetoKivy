@@ -5,11 +5,10 @@
  Requisitos: 
 
 - Python 3.10+
-- Kivy
-- Requests
+- Git 
 - Comando para clonar o repositório em sua maquina:
- - git clone https://github.com/Grandolffi/ProjetoKivy.git
- 
+ - No cmd escreva: git clone https://github.com/Grandolffi/ProjetoKivy.git
+
 - Comando para baixar o requirements:
     - python -m pip install -r requirements.txt
 
