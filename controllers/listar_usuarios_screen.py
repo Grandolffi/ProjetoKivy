@@ -1,10 +1,10 @@
 import requests
 from kivy.uix.screenmanager import Screen
 from kivy.lang import Builder
+from services.firebase_config import FIREBASE_URL
 
 Builder.load_file("views/cadastro_usuario.kv")
 
-FIREBASE_URL = "https://kivymarket-default-rtdb.firebaseio.com"
 
 class ListarUsuariosScreen(Screen):
     def on_enter(self):

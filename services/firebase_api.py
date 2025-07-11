@@ -1,6 +1,5 @@
 import requests
-
-FIREBASE_URL = "https://kivymarket-default-rtdb.firebaseio.com"
+from services.firebase_config import FIREBASE_URL
 
 def salvar_produto_firebase(produto):
     response = requests.post(f"{FIREBASE_URL}/produtos.json", json=produto)

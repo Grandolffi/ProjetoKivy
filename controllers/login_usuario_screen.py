@@ -2,9 +2,10 @@ import requests
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 from kivy.lang import Builder
+from services.firebase_config import FIREBASE_URL
 
 Builder.load_file("views/login_usuario.kv")
-FIREBASE_URL = "https://kivymarket-default-rtdb.firebaseio.com"
+
 
 class LoginUsuarioScreen(Screen):
     def fazer_login(self):

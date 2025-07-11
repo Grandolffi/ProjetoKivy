@@ -1,0 +1,1 @@
+FIREBASE_URL = "https://kivymarket-default-rtdb.firebaseio.com"

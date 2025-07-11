@@ -5,10 +5,11 @@ from models.cliente import Cliente
 from kivy.lang import Builder
 import requests
 from log import log
+from services.firebase_config import FIREBASE_URL
 
 Builder.load_file("views/cadastro_usuario.kv")
 
-FIREBASE_URL = "https://kivymarket-default-rtdb.firebaseio.com"
+
 
 class CadastroUsuarioScreen(Screen):
     def cadastrar_usuario(self):
