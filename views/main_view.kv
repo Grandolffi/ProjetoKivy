@@ -133,15 +133,15 @@
                     icon: "assets/icone_usuarios.png"
                     text: "Usuários"
                     on_press: app.root.current = "listar_usuarios"
-                    # opacity: 1 if app.tipo_usuario == "gerente" else 0
-                    # disabled: app.tipo_usuario != "gerente"
+                    opacity: 1 if app.tipo_usuario == "gerente" else 0
+                    disabled: app.tipo_usuario != "gerente"
 
                 IconButton:
                     icon: "assets/icone_compra.png"
                     text: "Comprar"
                     on_press: app.root.current = "compra"
-                    # opacity: 1 if app.tipo_usuario == "cliente" else 0
-                    # disabled: app.tipo_usuario != "cliente"
+                    opacity: 1 if app.tipo_usuario == "pessoa" else 0
+                    disabled: app.tipo_usuario != "pessoa"
 
 
 <ProdutoScreen>:
