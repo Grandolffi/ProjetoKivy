@@ -117,11 +117,15 @@
                     text: "Cadastro"
                     icon: "assets/icone_cadastro.png"
                     on_press: app.root.current = "produtos"
+                    opacity: 1 if app.tipo_usuario == "gerente" else 0
+                    disabled: app.tipo_usuario != "gerente"
+                    
 
                 IconButton:
                     icon: "assets/icone_lista.png"
                     text: "Lista"
                     on_press: app.root.current = "lista"
+                    
 
             # Segunda linha
             BoxLayout:
@@ -140,8 +144,7 @@
                     icon: "assets/icone_compra.png"
                     text: "Comprar"
                     on_press: app.root.current = "compra"
-                    opacity: 1 if app.tipo_usuario == "pessoa" else 0
-                    disabled: app.tipo_usuario != "pessoa"
+                    
 
 
 <ProdutoScreen>:

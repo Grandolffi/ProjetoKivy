@@ -6,7 +6,7 @@ class Pessoa: #classe mae de funcionario
 
     def to_dict(self): #converte o objeto Pessoa para um dicionário, útil para salvar no Firebase.
         return {
-            "tipo": "pessoa",  # pode ser sobrescrito por subclasses
+            "tipo": "cliente",  # pode ser sobrescrito por subclasses
             "nome": self.nome,
             "email": self.email,
             "cpf": self.cpf
